@@ -9,7 +9,10 @@ module.exports = {
     mode: 'development',
     devtool: 'eval-source-map',
     devServer: {
-        contentBase: './build'
+        contentBase: './build',
+        host: '0.0.0.0',
+        port: 8080,
+        disableHostCheck: true
     },
     output: {
         path: path.resolve(__dirname, 'build'),
@@ -24,7 +27,7 @@ module.exports = {
                 use: 'ts-loader'
             },
             {
-                test: [ /\.vert$/, /\.frag$/ ],
+                test: [/\.vert$/, /\.frag$/],
                 use: 'raw-loader'
             }
         ]
@@ -34,14 +37,14 @@ module.exports = {
             cacheGroups: {
                 commons: {
                     test: /[\\/]node_modules[\\/]/,
-                    name: "vendors",
-                    chunks: "all"
+                    name: 'vendors',
+                    chunks: 'all'
                 }
             }
         }
     },
     resolve: {
-        extensions: [ '.tsx', '.ts', '.js' ]
+        extensions: ['.tsx', '.ts', '.js']
     },
     stats: true,
     plugins: [
@@ -50,8 +53,7 @@ module.exports = {
             'typeof CANVAS_RENDERER': JSON.stringify(true),
             'typeof WEBGL_RENDERER': JSON.stringify(true)
         }),
-        new CopyWebpackPlugin(
-        [
+        new CopyWebpackPlugin([
             {
                 from: 'assets',
                 to: 'assets',
